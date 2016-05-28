@@ -1,0 +1,30 @@
+{
+  "name": "emoji-menu",
+  "version": "0.1.0",
+  "description": "a emoji cheat sheet on your menubar",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lazybios/emoji-menu.git"
+  },
+  "keywords": [
+    "emoji",
+    "menubar",
+    "electron"
+  ],
+  "author": "lazybios, runfastlynda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lazybios/emoji-menu/issues"
+  },
+  "homepage": "https://github.com/lazybios/emoji-menu#readme",
+  "dependencies": {
+    "clipboard": "^1.5.10",
+    "electron-prebuilt": "^1.2.0",
+    "menubar": "^4.1.1"
+  }
+}
