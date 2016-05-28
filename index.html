@@ -3,9 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>test</title>
+    <title>emoji-menu</title>
   </head>
   <body>
-    hello, electron
+    <div>
+      <img class="emoji" src="graphics/emojis/bowtie.png" alt=":bowtie:"style="width: 22px; height: 22px;" data-clipboard-action="copy">
+      <img class="emoji" src="graphics/emojis/smile.png" alt=":smile:" style="width: 22px; height: 22px;" data-clipboard-action="copy">
+    </div>
+    <script type="text/javascript" charset="utf-8">
+      require(`${__dirname}/renderer.js`)
+    </script>
   </body>
 </html>
