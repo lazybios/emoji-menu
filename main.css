@@ -10,6 +10,24 @@ body {
   padding: 2px;
 }
 
+.emoji-tips {
+  display: none;
+  width: 120px;
+  height: 36px;
+  display: none;
+  text-align: center;
+  line-height: 36px;
+  color: #3F51B5;
+  font-size: 16px; 
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
 .emoji-tab {
   padding-right: 1%;
 }
@@ -25,21 +43,35 @@ body {
   margin-right: -4px;
   list-style: none;
   overflow: hidden;
+  border-bottom: 2px solid #eee;
 }
 
-.select {
+.select-tab {
   color: #3F51B5;
-  border-bottom: 2px solid #FF4081;
+  border-bottom: 2px solid #FF4081!important;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .emoji-list {
   display: none;
   padding-left: 4px;
+  overflow: hidden; 
 }
 
 .emoji-list:nth-child(1) {
   display: block;
 }
+
+.emoji-list section {
+  display: none;
+}
+
+.emoji-list section:nth-child(1) {
+  display: block;
+}
+
 
 .emoji-list img {
   width: 32px;
@@ -60,5 +92,13 @@ body {
   height: 7px;
   display: inline-block;
   border-radius: 50%;
-  background-color: #6A6A6A;
+  background-color: #CCCCCC;
+  margin-right: 3px;  
+}
+
+.select {
+  background-color: #6A6A6A!important;
+  -webkit-transition: all 0.2s ease-in-out!important;
+  -moz-transition: all 0.2s ease-in-out!important;
+  transition: all 0.2s ease-in-out!important;
 }
