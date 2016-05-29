@@ -1,0 +1,64 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 400px;
+  height: 300px;
+  padding: 2px;
+}
+
+.emoji-tab {
+  padding-right: 1%;
+}
+
+.emoji-tab li {
+  width: 16.67%;
+  text-align: center;
+  display: inline-block;
+  padding: 12px 0;
+  font-size: 15px;
+  height: 36px;
+  margin-top: -4px;
+  margin-right: -4px;
+  list-style: none;
+  overflow: hidden;
+}
+
+.select {
+  color: #3F51B5;
+  border-bottom: 2px solid #FF4081;
+}
+
+.emoji-list {
+  display: none;
+  padding-left: 4px;
+}
+
+.emoji-list:nth-child(1) {
+  display: block;
+}
+
+.emoji-list img {
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.emoji-list ul {
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  bottom: 2px;
+}
+
+.emoji-list ul li {
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: #6A6A6A;
+}
