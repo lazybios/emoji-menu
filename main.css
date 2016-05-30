@@ -5,27 +5,31 @@
 }
 
 body {
-  width: 400px;
+  width: 428px;
   height: 300px;
-  padding: 2px;
+  background-color: #fafafa;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 
 .emoji-copy-status {
   display: none;
-  width: 120px;
+  width: 100px;
   height: 36px;
   display: none;
   text-align: center;
   line-height: 36px;
-  color: #3F51B5;
-  font-size: 16px; 
-  font-weight: bold;
+  background-color: #000;
+  opacity: 0.65;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 14px; 
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
+  z-index: 100;
 }
 
 .emoji-tab {
@@ -33,7 +37,7 @@ body {
 }
 
 .emoji-tab li {
-  width: 16.67%;
+  width: 20%;
   text-align: center;
   display: inline-block;
   padding: 12px 0;
@@ -49,47 +53,45 @@ body {
 .tab-selected {
   color: #3F51B5;
   border-bottom: 2px solid #FF4081!important;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
 }
 
-.emoji-list {
+.emoji-group {
   display: none;
-  padding-left: 4px;
-  overflow: hidden; 
+  margin-top: -4px;
 }
 
-.emoji-list:nth-child(1) {
+.emoji-group:nth-child(1) {
   display: block;
 }
 
-.emoji-list section {
+.emoji-group section {
   display: none;
 }
 
-.emoji-list section:nth-child(1) {
+.emoji-group section:nth-child(1) {
   display: block;
 }
 
 
-.emoji-list img {
-  width: 32px;
-  height: 32px;
-  padding: 5px;
-  display: inline-block;
+.emoji-group img {
+  margin-left: 8px;
+  margin-top: 8px;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
 }
 
-.emoji-list ul {
-  width: 100%;
+.emoji-group ul {
+  width: 400px;
   text-align: center;
   position: fixed;
+  left: 0;
   bottom: 2px;
 }
 
-.emoji-list ul li {
-  width: 7px;
-  height: 7px;
+.emoji-group ul li {
+  width: 8px; 
+  height: 8px;
   display: inline-block;
   border-radius: 50%;
   background-color: #CCCCCC;
@@ -98,7 +100,4 @@ body {
 
 .pagination-selected {
   background-color: #6A6A6A!important;
-  -webkit-transition: all 0.2s ease-in-out!important;
-  -moz-transition: all 0.2s ease-in-out!important;
-  transition: all 0.2s ease-in-out!important;
 }

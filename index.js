@@ -1,8 +1,8 @@
 var menubar = require('menubar')
 
 var mb = menubar({
-  width: 400,
-  height: 300,
+  width: 428,
+  height: 312,
   icon: 'icon.png'
 })
 
