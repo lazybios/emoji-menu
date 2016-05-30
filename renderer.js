@@ -33,7 +33,7 @@ function statusTips(text){
 // Tab
 var emojiTabs = $('#emoji-tab>li');
 var emojiLists = $('#emoji-view>div');
-$('#emoji-tab li').on('click',function(){
+$('#emoji-tab li').on('click', function(){
   emojiTabs.removeClass('tab-selected');
   emojiLists.hide();
   $(this).addClass('tab-selected');
@@ -56,9 +56,9 @@ var placesListNumber = $('#places-list-number>li');
 var symbolsSections = $('#symbols>section');
 var symbolsListNumber = $('#symbols-list-number>li');
 
-function hoverChangeSection(tab,div){
+function hoverChangeSection(tab, div){
   for (var i = 0; i < tab.length; i++) {
-    $(tab).eq(i).attr('text',i);
+    $(tab).eq(i).attr('text', i);
     $(tab).eq(i).on('mouseover', function(){
       $(tab).removeClass('pagination-selected');
       $(div).hide();
