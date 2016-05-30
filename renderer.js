@@ -1,8 +1,11 @@
 
-//Copy
-var Clipboard = require(`${__dirname}/node_modules/clipboard/dist/clipboard.js`)
+// JQuery
+var $ = require("jquery");
 
-var clipboard = new Clipboard(".emoji", {
+// Copy
+var Clipboard = require(`${__dirname}/node_modules/clipboard/dist/clipboard.js`);
+
+var clipboard = new Clipboard(".emoji-cell", {
   text: function(trigger){
     return trigger.getAttribute('alt');
   }
@@ -11,7 +14,7 @@ var clipboard = new Clipboard(".emoji", {
 clipboard.on('success', function(e){
 
   // toast copy success
-  statusTips('Copy Success');
+  statusTips('Copied!');
   e.clearSelection();
 });
 
@@ -22,59 +25,51 @@ clipboard.on('error', function(e){
 });
 
 function statusTips(text){
-  var CopyStatus = document.getElementById('emoji-copy-status');
-  CopyStatus.innerHTML = text;
-  CopyStatus.style.display = 'block';
-  var CopyStatusDisappear = setTimeout(function(){
-    CopyStatus.style.display = 'none';
-  },2000);
+  var CopyStatus = $('#emoji-copy-status');
+  CopyStatus.html(text);
+  CopyStatus.stop().fadeIn(400).delay(2000).fadeOut(400);
 }
 
-//Tab
-var emojiTabs = document.getElementById('emoji-tab').getElementsByTagName('li');
-var emojiLists = document.getElementById('emoji-lists').getElementsByTagName('div');
-for (var i = 0; i < emojiTabs.length; i++) {
-  emojiTabs[i].id = i;
-  emojiTabs[i].onclick = function(){
-    for (var j = 0; j < emojiTabs.length; j++) {
-      emojiTabs[j].className = '';
-      emojiLists[j].style.display = 'none';
+// Tab
+var emojiTabs = $('#emoji-tab>li');
+var emojiLists = $('#emoji-view>div');
+$('#emoji-tab li').on('click', function(){
+  emojiTabs.removeClass('tab-selected');
+  emojiLists.hide();
+  $(this).addClass('tab-selected');
+  for (var i = 0; i < emojiLists.length; i++) {
+    if ($(this).text().toLowerCase() === emojiLists[i].id) {
+      $('#'+$(this).text().toLowerCase()).show();
     }
-    this.className='tab-selected';
-    emojiLists[this.id].style.display = 'block';
   }
-}
+})
 
-//Lists Number
-var peoplesSections = document.getElementById('peoples').getElementsByTagName('section');
-var peoplesListNumber = document.getElementById('peoples-list-number').getElementsByTagName('li');
-var naturesSections = document.getElementById('natures').getElementsByTagName('section');
-var naturesListNumber = document.getElementById('natures-list-number').getElementsByTagName('li');
-var objectsSections = document.getElementById('objects').getElementsByTagName('section');
-var objectsListNumber = document.getElementById('objects-list-number').getElementsByTagName('li');
-var placesSections = document.getElementById('places').getElementsByTagName('section');
-var placesListNumber = document.getElementById('places-list-number').getElementsByTagName('li');
-var symbolsSections = document.getElementById('symbols').getElementsByTagName('section');
-var symbolsListNumber = document.getElementById('symbols-list-number').getElementsByTagName('li');
+// Lists Number
+var peoplesSections = $('#peoples>section');
+var peoplesListNumber = $('#peoples-list-number>li');
+var naturesSections = $('#natures>section');
+var naturesListNumber = $('#natures-list-number>li');
+var objectsSections = $('#objects>section');
+var objectsListNumber = $('#objects-list-number>li');
+var placesSections = $('#places>section');
+var placesListNumber = $('#places-list-number>li');
+var symbolsSections = $('#symbols>section');
+var symbolsListNumber = $('#symbols-list-number>li');
 
-function changeSection(tab,div){
+function hoverChangeSection(tab, div){
   for (var i = 0; i < tab.length; i++) {
-    tab[i].id = i;
-    tab[i].onmouseover = function(){
-      for (var j = 0; j < tab.length; j++) {
-        tab[j].className = '';
-        div[j].style.display = 'none';
-      }
-      this.className='pagination-selected';
-      div[this.id].style.display = 'block';
-    }
+    $(tab).eq(i).attr('text', i);
+    $(tab).eq(i).on('mouseover', function(){
+      $(tab).removeClass('pagination-selected');
+      $(div).hide();
+      $(this).addClass('pagination-selected');
+      $(div).eq($(this).attr('text')).show();
+    })
   }
 }
 
-changeSection(peoplesListNumber,peoplesSections);
-changeSection(naturesListNumber,naturesSections);
-changeSection(objectsListNumber,objectsSections);
-changeSection(placesListNumber,placesSections);
-changeSection(symbolsListNumber,symbolsSections);
-
-
+hoverChangeSection(peoplesListNumber,peoplesSections);
+hoverChangeSection(naturesListNumber,naturesSections);
+hoverChangeSection(objectsListNumber,objectsSections);
+hoverChangeSection(placesListNumber,placesSections);
+hoverChangeSection(symbolsListNumber,symbolsSections);
