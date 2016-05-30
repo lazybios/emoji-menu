@@ -26,5 +26,13 @@
     "clipboard": "^1.5.10",
     "electron-prebuilt": "^1.2.0",
     "menubar": "^4.1.1"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^1.1.6"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
