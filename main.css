@@ -19,16 +19,15 @@ body {
   text-align: center;
   line-height: 36px;
   background-color: #000;
-  opacity: 0.65;
+  opacity: 0.6;
   color: #fff;
   border-radius: 3px;
   font-size: 14px; 
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+  top: 80%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -18px;
   z-index: 100;
 }
 
@@ -82,11 +81,11 @@ body {
 }
 
 .emoji-group ul {
-  width: 400px;
+  width: 428px;
   text-align: center;
   position: fixed;
   left: 0;
-  bottom: 2px;
+  bottom: 4px;
 }
 
 .emoji-group ul li {

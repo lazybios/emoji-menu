@@ -13,14 +13,14 @@ var clipboard = new Clipboard(".emoji-cell", {
 
 clipboard.on('success', function(e){
 
-  // toast copy success
+  // Toast copy success
   statusTips('Copied!');
   e.clearSelection();
 });
 
 clipboard.on('error', function(e){
 
-  // toast copy failed
+  // Toast copy failed
   statusTips('Copy Failed');
 });
 
@@ -68,8 +68,8 @@ function hoverChangeSection(tab, div){
   }
 }
 
-hoverChangeSection(peoplesListNumber,peoplesSections);
-hoverChangeSection(naturesListNumber,naturesSections);
-hoverChangeSection(objectsListNumber,objectsSections);
-hoverChangeSection(placesListNumber,placesSections);
-hoverChangeSection(symbolsListNumber,symbolsSections);
+hoverChangeSection(peoplesListNumber, peoplesSections);
+hoverChangeSection(naturesListNumber, naturesSections);
+hoverChangeSection(objectsListNumber, objectsSections);
+hoverChangeSection(placesListNumber, placesSections);
+hoverChangeSection(symbolsListNumber, symbolsSections);
