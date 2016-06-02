@@ -45,10 +45,10 @@ $('#emoji-tab li').on('click', function(){
 })
 
 // Lists Number
-var peoplesSections = $('#peoples>section');
-var peoplesListNumber = $('#peoples-list-number>li');
-var naturesSections = $('#natures>section');
-var naturesListNumber = $('#natures-list-number>li');
+var peopleSections = $('#people>section');
+var peopleListNumber = $('#people-list-number>li');
+var natureSections = $('#nature>section');
+var natureListNumber = $('#nature-list-number>li');
 var objectsSections = $('#objects>section');
 var objectsListNumber = $('#objects-list-number>li');
 var placesSections = $('#places>section');
@@ -58,18 +58,18 @@ var symbolsListNumber = $('#symbols-list-number>li');
 
 function hoverChangeSection(tab, div){
   for (var i = 0; i < tab.length; i++) {
-    $(tab).eq(i).attr('text', i);
+    $(tab).eq(i).attr('data-text', i);
     $(tab).eq(i).on('mouseover', function(){
       $(tab).removeClass('pagination-selected');
       $(div).hide();
       $(this).addClass('pagination-selected');
-      $(div).eq($(this).attr('text')).show();
+      $(div).eq($(this).attr('data-text')).show();
     })
   }
 }
 
-hoverChangeSection(peoplesListNumber, peoplesSections);
-hoverChangeSection(naturesListNumber, naturesSections);
+hoverChangeSection(peopleListNumber, peopleSections);
+hoverChangeSection(natureListNumber, natureSections);
 hoverChangeSection(objectsListNumber, objectsSections);
 hoverChangeSection(placesListNumber, placesSections);
 hoverChangeSection(symbolsListNumber, symbolsSections);
