@@ -7,8 +7,38 @@
 body {
   width: 428px;
   height: 312px;
-  background-color: #fafafa;
+  background-color: #F6F6F6;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+.emoji-search {
+  width: 101%;
+  height: 48px;
+  padding: 6px;
+}
+
+.emoji-search input {
+  width: 100%;
+  height: 38px;
+  padding: 3px 20px 3px 46px;
+  font-size: 14px;
+  outline: none;
+  margin: 0 auto;
+  border: none;
+  border-radius: 2px;
+}
+
+.emoji-search img {
+  width: 24px;
+  position: absolute;
+  top: 14px;
+  left: 20px;
+}
+
+.emoji-search i {
+  position: absolute;
+  top: 14px;
+  right: 20px;
 }
 
 .emoji-copy-status {
@@ -46,7 +76,7 @@ body {
   margin-right: -4px;
   list-style: none;
   overflow: hidden;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid #E6E6E6;
 }
 
 .tab-selected {

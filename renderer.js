@@ -73,3 +73,52 @@ hoverChangeSection(natureListNumber, natureSections);
 hoverChangeSection(objectsListNumber, objectsSections);
 hoverChangeSection(placesListNumber, placesSections);
 hoverChangeSection(symbolsListNumber, symbolsSections);
+
+// Search
+function isElementMatching(element, needle) {
+  var alternative = element.attr('data-alternative-name');
+  var name = element.attr('alt');
+  return (name.toLowerCase().indexOf(needle) >= 0) ||
+    (alternative != null && alternative.toLowerCase().indexOf(needle) >= 0);
+}
+
+function highlightElements(needle) {
+  if (needle.length == 0) {
+    highlightAll();
+    $('#emoji-search-delete').hide();
+    return;
+  }
+  needle = needle.toLowerCase();
+  $('#emoji-view img').each(function (index, el) {
+    if (isElementMatching($(el), needle)) {
+      $(el).show();
+    } else {
+      $(el).hide();
+    }
+  });
+}
+
+function highlightAll() {
+  $('#emoji-view img').show();
+}
+
+$('#emoji-search>input').keyup(function(e) {
+  if (e.keyCode == 27) {
+    $(this).val('').blur();
+    highlightAll();
+    $('#emoji-search-delete').hide();
+  }
+});
+
+$('#emoji-search>input').on('change paste keyup', function() {
+  $('#emoji-search-delete').show();
+  highlightElements($('#emoji-search>input').val());
+});
+
+$('#emoji-search>input').focus();
+
+$('#emoji-search-delete').on('click',function(){
+  $('#emoji-search>input').val('');
+  $('#emoji-search-delete').hide();
+  highlightAll();
+})
