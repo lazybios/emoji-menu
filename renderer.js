@@ -2,6 +2,30 @@
 // JQuery
 var $ = require("jquery");
 
+// Paging
+function paging(group, i){
+  var img = $(group+' img');
+  console.log(img);
+  img.each(function (index, el) {
+    if (index>=i*70 && index<((+i+1)*70)) {
+      $(el).show();
+    } else {
+      $(el).hide();
+    }
+  });
+}
+
+function highlightAll() {
+  paging('#people',0);
+  paging('#nature',0);
+  paging('#objects',0);
+  paging('#places',0);
+  paging('#symbols',0);
+  $('.emoji-group>ul').show();
+}
+
+highlightAll();
+
 // Copy
 var Clipboard = require(`${__dirname}/node_modules/clipboard/dist/clipboard.js`);
 
@@ -45,34 +69,35 @@ $('#emoji-tab li').on('click', function(){
 })
 
 // Lists Number
-var peopleSections = $('#people>section');
 var peopleListNumber = $('#people-list-number>li');
-var natureSections = $('#nature>section');
 var natureListNumber = $('#nature-list-number>li');
-var objectsSections = $('#objects>section');
 var objectsListNumber = $('#objects-list-number>li');
-var placesSections = $('#places>section');
 var placesListNumber = $('#places-list-number>li');
-var symbolsSections = $('#symbols>section');
 var symbolsListNumber = $('#symbols-list-number>li');
 
-function hoverChangeSection(tab, div){
+function hoverChangeSection(tab){
   for (var i = 0; i < tab.length; i++) {
     $(tab).eq(i).attr('data-text', i);
     $(tab).eq(i).on('mouseover', function(){
       $(tab).removeClass('pagination-selected');
-      $(div).hide();
       $(this).addClass('pagination-selected');
-      $(div).eq($(this).attr('data-text')).show();
+      var selectedGroup = '#'+$('.tab-selected').text().toLowerCase();
+      var n = $(this).attr('data-text');
+      paging(selectedGroup, n);
     })
   }
 }
 
-hoverChangeSection(peopleListNumber, peopleSections);
-hoverChangeSection(natureListNumber, natureSections);
-hoverChangeSection(objectsListNumber, objectsSections);
-hoverChangeSection(placesListNumber, placesSections);
-hoverChangeSection(symbolsListNumber, symbolsSections);
+function initPages(tab){
+  $(tab).removeClass('pagination-selected');
+  $(tab).eq(0).addClass('pagination-selected');
+}
+
+hoverChangeSection(peopleListNumber);
+hoverChangeSection(natureListNumber);
+hoverChangeSection(objectsListNumber);
+hoverChangeSection(placesListNumber);
+hoverChangeSection(symbolsListNumber);
 
 // Search
 function isElementMatching(element, needle) {
@@ -88,6 +113,14 @@ function highlightElements(needle) {
     $('#emoji-search-delete').hide();
     return;
   }
+
+  $('.emoji-group>ul').hide();
+  initPages(peopleListNumber);
+  initPages(natureListNumber);
+  initPages(objectsListNumber);
+  initPages(placesListNumber);
+  initPages(symbolsListNumber);
+  
   needle = needle.toLowerCase();
   $('#emoji-view img').each(function (index, el) {
     if (isElementMatching($(el), needle)) {
@@ -96,10 +129,6 @@ function highlightElements(needle) {
       $(el).hide();
     }
   });
-}
-
-function highlightAll() {
-  $('#emoji-view img').show();
 }
 
 $('#emoji-search>input').keyup(function(e) {
@@ -121,4 +150,5 @@ $('#emoji-search-delete').on('click',function(){
   $('#emoji-search>input').val('');
   $('#emoji-search-delete').hide();
   highlightAll();
+
 })

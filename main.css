@@ -5,20 +5,26 @@
 }
 
 body {
-  width: 428px;
-  height: 312px;
+  width: 390px;
+  height: 360px;
   background-color: #F6F6F6;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  overflow: auto;
 }
 
 .emoji-search {
   width: 101%;
   height: 48px;
   padding: 6px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: #F6F6F6;
 }
 
 .emoji-search input {
-  width: 100%;
+  width: 99%;
   height: 38px;
   padding: 3px 20px 3px 46px;
   font-size: 14px;
@@ -62,7 +68,13 @@ body {
 }
 
 .emoji-tab {
+  width: 100%;
   padding-right: 1%;
+  position: fixed;
+  top: 48px;
+  left: 0;
+  z-index: 100;
+  background-color: #F6F6F6;
 }
 
 .emoji-tab li {
@@ -79,6 +91,17 @@ body {
   border-bottom: 2px solid #E6E6E6;
 }
 
+#emoji-view {
+  width: 100%;
+  height: auto;
+  padding-top: 84px;
+  overflow: auto!important;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 .tab-selected {
   color: #3F51B5;
   border-bottom: 2px solid #FF4081!important;
@@ -87,6 +110,9 @@ body {
 .emoji-group {
   display: none;
   margin-top: -4px;
+  width: 100%;
+  height: auto;
+  overflow: auto!important;
 }
 
 .emoji-group:nth-child(1) {
@@ -111,7 +137,7 @@ body {
 }
 
 .emoji-group ul {
-  width: 428px;
+  width: 390px;
   text-align: center;
   position: fixed;
   left: 0;
