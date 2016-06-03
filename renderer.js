@@ -2,12 +2,11 @@
 // JQuery
 var $ = require("jquery");
 
-// Paging
-function paging(group, i){
-  var img = $(group+' img');
-  console.log(img);
-  img.each(function (index, el) {
-    if (index>=i*70 && index<((+i+1)*70)) {
+// Pagination
+function pagination(group, i){
+  var imgs = $(group+' img');
+  imgs.each(function (index, el) {
+    if (index >= i * 70 && index < ((+i + 1) * 70)) {
       $(el).show();
     } else {
       $(el).hide();
@@ -16,11 +15,11 @@ function paging(group, i){
 }
 
 function highlightAll() {
-  paging('#people',0);
-  paging('#nature',0);
-  paging('#objects',0);
-  paging('#places',0);
-  paging('#symbols',0);
+  pagination('#people', 0);
+  pagination('#nature', 0);
+  pagination('#objects', 0);
+  pagination('#places', 0);
+  pagination('#symbols', 0);
   $('.emoji-group>ul').show();
 }
 
@@ -30,19 +29,19 @@ highlightAll();
 var Clipboard = require(`${__dirname}/node_modules/clipboard/dist/clipboard.js`);
 
 var clipboard = new Clipboard(".emoji-cell", {
-  text: function(trigger){
+  text: function (trigger) {
     return trigger.getAttribute('alt');
   }
 });
 
-clipboard.on('success', function(e){
+clipboard.on('success', function (e) {
 
   // Toast copy success
   statusTips('Copied!');
   e.clearSelection();
 });
 
-clipboard.on('error', function(e){
+clipboard.on('error', function (e) {
 
   // Toast copy failed
   statusTips('Copy Failed');
@@ -57,7 +56,7 @@ function statusTips(text){
 // Tab
 var emojiTabs = $('#emoji-tab>li');
 var emojiLists = $('#emoji-view>div');
-$('#emoji-tab li').on('click', function(){
+$('#emoji-tab li').on('click', function () {
   emojiTabs.removeClass('tab-selected');
   emojiLists.hide();
   $(this).addClass('tab-selected');
@@ -78,12 +77,12 @@ var symbolsListNumber = $('#symbols-list-number>li');
 function hoverChangeSection(tab){
   for (var i = 0; i < tab.length; i++) {
     $(tab).eq(i).attr('data-text', i);
-    $(tab).eq(i).on('mouseover', function(){
+    $(tab).eq(i).on('mouseover', function () {
       $(tab).removeClass('pagination-selected');
       $(this).addClass('pagination-selected');
       var selectedGroup = '#'+$('.tab-selected').text().toLowerCase();
       var n = $(this).attr('data-text');
-      paging(selectedGroup, n);
+      pagination(selectedGroup, n);
     })
   }
 }
@@ -131,7 +130,7 @@ function highlightElements(needle) {
   });
 }
 
-$('#emoji-search>input').keyup(function(e) {
+$('#emoji-search>input').keyup(function (e) {
   if (e.keyCode == 27) {
     $(this).val('').blur();
     highlightAll();
@@ -139,16 +138,15 @@ $('#emoji-search>input').keyup(function(e) {
   }
 });
 
-$('#emoji-search>input').on('change paste keyup', function() {
+$('#emoji-search>input').on('change paste keyup', function () {
   $('#emoji-search-delete').show();
   highlightElements($('#emoji-search>input').val());
 });
 
 $('#emoji-search>input').focus();
 
-$('#emoji-search-delete').on('click',function(){
+$('#emoji-search-delete').on('click', function () {
   $('#emoji-search>input').val('');
   $('#emoji-search-delete').hide();
   highlightAll();
-
 })
