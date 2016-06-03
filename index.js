@@ -6,6 +6,10 @@ var mb = menubar({
   icon: 'icon.png'
 })
 
+// fixed ERR_INSUFFICIENT_RESOURCES
+
+process.setFdLimit(8192);
+
 mb.on('ready', function ready(){
   console.log('app is ready!!');
 })
