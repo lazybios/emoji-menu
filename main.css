@@ -5,8 +5,8 @@
 }
 
 body {
-  width: 390px;
-  height: 360px;
+  min-width: 450px;
+  min-height: 420px;
   background-color: #F6F6F6;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   overflow: auto;
@@ -78,7 +78,7 @@ body {
 }
 
 .emoji-tab li {
-  width: 20%;
+  width: 16.67%;
   text-align: center;
   display: inline-block;
   padding: 12px 0;
@@ -103,7 +103,7 @@ body {
 }
 
 .tab-selected {
-  color: #3F51B5;
+  color: #0381E8;
   border-bottom: 2px solid #FF4081!important;
 }
 
@@ -127,32 +127,10 @@ body {
   display: block;
 }
 
-
 .emoji-group img {
-  margin-left: 8px;
-  margin-top: 8px;
-  width: 26px;
-  height: 26px;
+  margin-left: 16px;
+  margin-top: 16px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
-}
-
-.emoji-group ul {
-  width: 390px;
-  text-align: center;
-  position: fixed;
-  left: 0;
-  bottom: 4px;
-}
-
-.emoji-group ul li {
-  width: 8px; 
-  height: 8px;
-  display: inline-block;
-  border-radius: 50%;
-  background-color: #CCCCCC;
-  margin-right: 3px;  
-}
-
-.pagination-selected {
-  background-color: #6A6A6A!important;
 }
