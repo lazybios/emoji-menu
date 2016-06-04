@@ -119,7 +119,7 @@ function highlightElements(needle){
   initPages(objectsListNumber);
   initPages(placesListNumber);
   initPages(symbolsListNumber);
-  
+
   needle = needle.toLowerCase();
   $('#emoji-view img').each(function(index, el){
     if(isElementMatching($(el), needle)){
