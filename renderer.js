@@ -3,11 +3,21 @@
 var $ = require("jquery");
 var emojis = require("./emoji.js");
 
+var fs = require("fs");
+
+// Nedb
+var Datastore = require('nedb');
+var db = new Datastore({});
+
+
+const TEXT_RE = /:(.*):/;
+const NAME_RE = /.*\/(.*)\.png$/;
+
 // Render Emoji
 var peopleHtml = "",
-    natureHtml = "", 
-    objectsHtml = "", 
-    placesHtml = "", 
+    natureHtml = "",
+    objectsHtml = "",
+    placesHtml = "",
     symbolsHtml = "";
 
 emojis.people.map(function(element){
@@ -36,6 +46,15 @@ $('#objects').html(objectsHtml);
 $('#places').html(placesHtml);
 $('#symbols').html(symbolsHtml);
 
+function emojiMetas(el){
+  var name = $(el).attr('src').match(NAME_RE)[1];
+  var alternative = $(el).data('alternative-name');
+  var text = $(el).attr('alt').match(TEXT_RE)[1];
+
+  var obj = { name: name, alternative: alternative, text: text, count: 0 };
+  return obj;
+}
+
 // Copy
 var Clipboard = require(`${__dirname}/node_modules/clipboard/dist/clipboard.js`);
 
@@ -50,6 +69,26 @@ clipboard.on('success', function(e){
   // Toast copy success
   statusTips('Copied ' + e.text);
   e.clearSelection();
+
+  var text = $(e.trigger).attr('alt').match(TEXT_RE)[1];
+
+  // recently used stattistic
+  db.find({ text:  text}, function(err, docs){
+    if(docs.length == 0){
+      // save
+      db.insert(emojiMetas(e.trigger), function(err, docs){
+        console.log(docs)
+      });
+    }else{
+      // count + 1
+      db.update({ text: text }, {$inc: {count: 1}}, function(err, docs){
+        if(err != null){
+          console.log('error')
+        }
+        console.log(docs)
+      });
+    }
+  });
 });
 
 clipboard.on('error', function(e){
