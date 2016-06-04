@@ -1,29 +1,40 @@
 
 // JQuery
 var $ = require("jquery");
+var emojis = require("./emoji.js");
 
-// Pagination
-function pagination(group, i){
-  var imgs = $(group+' img');
-  imgs.each(function(index, el){
-    if(index >= i * 70 && index < ((+i + 1) * 70)){
-      $(el).show();
-    }else{
-      $(el).hide();
-    }
-  });
-}
+// Render Emoji
+var peopleHtml="",
+    natureHtml="", 
+    objectsHtml="", 
+    placesHtml="", 
+    symbolsHtml="";
 
-function highlightAll(){
-  pagination('#people', 0);
-  pagination('#nature', 0);
-  pagination('#objects', 0);
-  pagination('#places', 0);
-  pagination('#symbols', 0);
-  $('.emoji-group>ul').show();
-}
+emojis.people.map(function(element){
+  peopleHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+});
 
-highlightAll();
+emojis.nature.map(function(element){
+  natureHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+});
+
+emojis.objects.map(function(element){
+  objectsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+});
+
+emojis.places.map(function(element){
+  placesHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+});
+
+emojis.symbols.map(function(element){
+  symbolsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+});
+
+$('#people').html(peopleHtml);
+$('#nature').html(natureHtml);
+$('#objects').html(objectsHtml);
+$('#places').html(placesHtml);
+$('#symbols').html(symbolsHtml);
 
 // Copy
 var Clipboard = require(`${__dirname}/node_modules/clipboard/dist/clipboard.js`);
@@ -67,37 +78,6 @@ $('#emoji-tab li').on('click', function(){
   }
 })
 
-// Lists Number
-var peopleListNumber = $('#people-list-number>li');
-var natureListNumber = $('#nature-list-number>li');
-var objectsListNumber = $('#objects-list-number>li');
-var placesListNumber = $('#places-list-number>li');
-var symbolsListNumber = $('#symbols-list-number>li');
-
-function hoverChangeSection(tab){
-  for(var i = 0; i < tab.length; i++){
-    $(tab).eq(i).attr('data-text', i);
-    $(tab).eq(i).on('mouseover', function(){
-      $(tab).removeClass('pagination-selected');
-      $(this).addClass('pagination-selected');
-      var selectedGroup = '#'+$('.tab-selected').text().toLowerCase();
-      var n = $(this).attr('data-text');
-      pagination(selectedGroup, n);
-    })
-  }
-}
-
-function initPages(tab){
-  $(tab).removeClass('pagination-selected');
-  $(tab).eq(0).addClass('pagination-selected');
-}
-
-hoverChangeSection(peopleListNumber);
-hoverChangeSection(natureListNumber);
-hoverChangeSection(objectsListNumber);
-hoverChangeSection(placesListNumber);
-hoverChangeSection(symbolsListNumber);
-
 // Search
 function isElementMatching(element, needle){
   var alternative = element.attr('data-alternative-name');
@@ -106,19 +86,16 @@ function isElementMatching(element, needle){
     (alternative != null && alternative.toLowerCase().indexOf(needle) >= 0);
 }
 
+function highlightAll(){
+  $('.emoji-cell').show();
+}
+
 function highlightElements(needle){
   if(needle.length == 0){
     highlightAll();
     $('#emoji-search-delete').hide();
     return;
   }
-
-  $('.emoji-group>ul').hide();
-  initPages(peopleListNumber);
-  initPages(natureListNumber);
-  initPages(objectsListNumber);
-  initPages(placesListNumber);
-  initPages(symbolsListNumber);
 
   needle = needle.toLowerCase();
   $('#emoji-view img').each(function(index, el){
@@ -149,4 +126,4 @@ $('#emoji-search-delete').on('click', function(){
   $('#emoji-search>input').val('');
   $('#emoji-search-delete').hide();
   highlightAll();
-})
+});
