@@ -3,38 +3,72 @@
 var $ = require("jquery");
 var emojis = require("./emoji.js");
 
+var fs = require("fs");
+
+// Nedb
+var Datastore = require('nedb');
+var db = new Datastore({filename: './recently.db', autoload: true});
+
+
+const TEXT_RE = /:(.*):/;
+const NAME_RE = /.*\/(.*)\.png$/;
+
 // Render Emoji
 var peopleHtml = "",
-    natureHtml = "", 
-    objectsHtml = "", 
-    placesHtml = "", 
+    natureHtml = "",
+    objectsHtml = "",
+    placesHtml = "",
     symbolsHtml = "";
 
 emojis.people.map(function(element){
-  peopleHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  peopleHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
 
 emojis.nature.map(function(element){
-  natureHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  natureHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
 
 emojis.objects.map(function(element){
-  objectsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  objectsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
 
 emojis.places.map(function(element){
-  placesHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  placesHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
 
 emojis.symbols.map(function(element){
-  symbolsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  symbolsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
+
+function initCommonTab(){
+  db.find({}).sort({count: -1}).limit(30).exec(function(err, docs){
+    var commonHtml = "";
+    $.each(docs, function(_, value){
+       commonHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + value.name + ".png' alt=':"+ value.text +":' data-alternative-name='" + value.alternative_name + "'>"
+    });
+    $('#common').html(commonHtml);
+  });
+}
 
 $('#people').html(peopleHtml);
 $('#nature').html(natureHtml);
 $('#objects').html(objectsHtml);
 $('#places').html(placesHtml);
 $('#symbols').html(symbolsHtml);
+initCommonTab();
+
+$('#common-tab').on('click', function(){
+  initCommonTab();
+});
+
+function emojiMetas(el){
+  var name = $(el).attr('src').match(NAME_RE)[1];
+  var alternative = $(el).data('alternative-name');
+  var text = $(el).attr('alt').match(TEXT_RE)[1];
+
+  var obj = { name: name, alternative_name: alternative, text: text, count: 0 };
+  return obj;
+}
 
 // Copy
 var Clipboard = require(`${__dirname}/node_modules/clipboard/dist/clipboard.js`);
@@ -50,6 +84,25 @@ clipboard.on('success', function(e){
   // Toast copy success
   statusTips('Copied ' + e.text);
   e.clearSelection();
+
+  var text = $(e.trigger).attr('alt').match(TEXT_RE)[1];
+
+  // recently used stattistic
+  db.find({ text:  text}, function(err, docs){
+    if(docs.length === 0){
+      // save
+      db.insert(emojiMetas(e.trigger), function(err, docs){
+        console.log(err);
+      });
+    }else{
+      // count + 1
+      db.update({ text: text }, {$inc: {count: 1}}, function(err, docs){
+        if(err !== null){
+          console.log('error');
+        }
+      });
+    }
+  });
 });
 
 clipboard.on('error', function(e){
