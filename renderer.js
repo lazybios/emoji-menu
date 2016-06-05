@@ -46,12 +46,23 @@ $('#objects').html(objectsHtml);
 $('#places').html(placesHtml);
 $('#symbols').html(symbolsHtml);
 
+$('#common-tab').on('click', function(){
+  db.find({}).sort({count: -1}).limit(30).exec(function(err, docs){
+    console.log(docs);
+    var commonHtml = "";
+    $.each(docs, function(_, value){
+       commonHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+value.name+".png' alt=':"+value.text+":' data-alternative-name='"+value.alternative_name+"'>"
+    });
+    $('#common').html(commonHtml);
+  });
+});
+
 function emojiMetas(el){
   var name = $(el).attr('src').match(NAME_RE)[1];
   var alternative = $(el).data('alternative-name');
   var text = $(el).attr('alt').match(TEXT_RE)[1];
 
-  var obj = { name: name, alternative: alternative, text: text, count: 0 };
+  var obj = { name: name, alternative_name: alternative, text: text, count: 0 };
   return obj;
 }
 
