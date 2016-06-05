@@ -72,8 +72,8 @@ $('#emoji-tab li').on('click', function(){
   emojiLists.hide();
   $(this).addClass('tab-selected');
   for(var i = 0; i < emojiLists.length; i++){
-    if($(this).text().toLowerCase() === emojiLists[i].id){
-      $('#'+$(this).text().toLowerCase()).show();
+    if($(this).data('title').toLowerCase() === emojiLists[i].id){
+      $('#'+$(this).data('title').toLowerCase()).show();
     }
   }
 })
