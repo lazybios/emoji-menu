@@ -48,14 +48,14 @@ var clipboard = new Clipboard('.emoji-cell', {
 clipboard.on('success', function(e){
 
   // Toast copy success
-  statusTips('Copied!');
+  statusTips('Copied ' + e.text);
   e.clearSelection();
 });
 
 clipboard.on('error', function(e){
 
   // Toast copy failed
-  statusTips('Copy Failed');
+  statusTips('Copy Failed ' + e.text);
 });
 
 function statusTips(text){

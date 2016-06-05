@@ -65,20 +65,18 @@ body {
 
 .emoji-copy-status {
   display: none;
-  width: 100px;
-  height: 36px;
+  padding: 10px 16px;
   display: none;
   text-align: center;
-  line-height: 36px;
   background-color: rgba(0,0,0,0.8);
   color: #fff;
   border-radius: 6px;
   font-size: 14px; 
-  position: absolute;
-  bottom: 40px;
+  position: fixed;
+  transform: translateX(-50%);
   left: 50%;
-  margin-left: -50px;
-  margin-top: -18px;
+  bottom: 40px;
+  margin: auto;
   z-index: 100;
 }
 
@@ -123,8 +121,7 @@ body {
 
 .tab-selected {
   color: #0381E8!important;
-/*  border-bottom: 2px solid #FF4081!important;
-*/}
+}
 
 .emoji-group {
   display: none;
@@ -156,5 +153,5 @@ body {
 }
 
 .emoji-group img:hover {
-  transform:scale(1.5);
+  transform: scale(1.5);
 }
