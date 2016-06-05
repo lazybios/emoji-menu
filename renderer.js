@@ -90,18 +90,17 @@ clipboard.on('success', function(e){
 
   // recently used stattistic
   db.find({ text:  text}, function(err, docs){
-    if(docs.length == 0){
+    if(docs.length === 0){
       // save
       db.insert(emojiMetas(e.trigger), function(err, docs){
-        console.log(docs)
+        console.log(err);
       });
     }else{
       // count + 1
       db.update({ text: text }, {$inc: {count: 1}}, function(err, docs){
-        if(err != null){
-          console.log('error')
+        if(err !== null){
+          console.log('error');
         }
-        console.log(docs)
       });
     }
   });
