@@ -7,7 +7,7 @@ var fs = require("fs");
 
 // Nedb
 var Datastore = require('nedb');
-var db = new Datastore({});
+var db = new Datastore({filename: './recently.db', autoload: true});
 
 
 const TEXT_RE = /:(.*):/;
@@ -40,13 +40,7 @@ emojis.symbols.map(function(element){
   symbolsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
 });
 
-$('#people').html(peopleHtml);
-$('#nature').html(natureHtml);
-$('#objects').html(objectsHtml);
-$('#places').html(placesHtml);
-$('#symbols').html(symbolsHtml);
-
-$('#common-tab').on('click', function(){
+function initCommonTab(){
   db.find({}).sort({count: -1}).limit(30).exec(function(err, docs){
     console.log(docs);
     var commonHtml = "";
@@ -55,6 +49,17 @@ $('#common-tab').on('click', function(){
     });
     $('#common').html(commonHtml);
   });
+}
+
+$('#people').html(peopleHtml);
+$('#nature').html(natureHtml);
+$('#objects').html(objectsHtml);
+$('#places').html(placesHtml);
+$('#symbols').html(symbolsHtml);
+initCommonTab();
+
+$('#common-tab').on('click', function(){
+  initCommonTab();
 });
 
 function emojiMetas(el){
