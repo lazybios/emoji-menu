@@ -21,31 +21,30 @@ var peopleHtml = "",
     symbolsHtml = "";
 
 emojis.people.map(function(element){
-  peopleHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  peopleHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
 
 emojis.nature.map(function(element){
-  natureHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  natureHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
 
 emojis.objects.map(function(element){
-  objectsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  objectsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
 
 emojis.places.map(function(element){
-  placesHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  placesHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
 
 emojis.symbols.map(function(element){
-  symbolsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
+  symbolsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name + "'>"
 });
 
 function initCommonTab(){
   db.find({}).sort({count: -1}).limit(30).exec(function(err, docs){
-    console.log(docs);
     var commonHtml = "";
     $.each(docs, function(_, value){
-       commonHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+value.name+".png' alt=':"+value.text+":' data-alternative-name='"+value.alternative_name+"'>"
+       commonHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + value.name + ".png' alt=':"+ value.text +":' data-alternative-name='" + value.alternative_name + "'>"
     });
     $('#common').html(commonHtml);
   });
