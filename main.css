@@ -34,8 +34,8 @@ body {
   top: 0;
   left: 0;
   z-index: 100;
-/*  background-color: #F6F6F6;
-*/}
+  background-color: #fff;
+}
 
 .emoji-search input {
   width: 100%;
