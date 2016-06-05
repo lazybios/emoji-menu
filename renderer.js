@@ -4,30 +4,30 @@ var $ = require("jquery");
 var emojis = require("./emoji.js");
 
 // Render Emoji
-var peopleHtml="",
-    natureHtml="", 
-    objectsHtml="", 
-    placesHtml="", 
-    symbolsHtml="";
+var peopleHtml = "",
+    natureHtml = "", 
+    objectsHtml = "", 
+    placesHtml = "", 
+    symbolsHtml = "";
 
 emojis.people.map(function(element){
-  peopleHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+  peopleHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
 });
 
 emojis.nature.map(function(element){
-  natureHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+  natureHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
 });
 
 emojis.objects.map(function(element){
-  objectsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+  objectsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
 });
 
 emojis.places.map(function(element){
-  placesHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+  placesHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
 });
 
 emojis.symbols.map(function(element){
-  symbolsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/"+element.name+".png' alt=':"+element.text+":' data-alternative-name='"+element.alternative_name+"'>"
+  symbolsHtml += "<img class='emoji-cell' data-clipboard-action='copy' src='graphics/emojis/" + element.name + ".png' alt=':" + element.text + ":' data-alternative-name='" + element.alternative_name q + "'>"
 });
 
 $('#people').html(peopleHtml);
@@ -73,7 +73,7 @@ $('#emoji-tab li').on('click', function(){
   $(this).addClass('tab-selected');
   for(var i = 0; i < emojiLists.length; i++){
     if($(this).data('title').toLowerCase() === emojiLists[i].id){
-      $('#'+$(this).data('title').toLowerCase()).show();
+      $('#' + $(this).data('title').toLowerCase()).show();
     }
   }
 })
@@ -83,7 +83,7 @@ function isElementMatching(element, needle){
   var alternative = element.attr('data-alternative-name');
   var name = element.attr('alt');
   return (name.toLowerCase().indexOf(needle) >= 0) ||
-    (alternative != null && alternative.toLowerCase().indexOf(needle) >= 0);
+    (alternative !== null && alternative.toLowerCase().indexOf(needle) >= 0);
 }
 
 function highlightAll(){
@@ -91,7 +91,7 @@ function highlightAll(){
 }
 
 function highlightElements(needle){
-  if(needle.length == 0){
+  if(needle.length === 0){
     highlightAll();
     $('#emoji-search-delete').hide();
     return;
@@ -108,7 +108,7 @@ function highlightElements(needle){
 }
 
 $('#emoji-search>input').keyup(function(e){
-  if(e.keyCode == 27){
+  if(e.keyCode === 27){
     $(this).val('').blur();
     highlightAll();
     $('#emoji-search-delete').hide();
