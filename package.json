@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "electron index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-packager . emoji-menu --platform=darwin --arch=x64 --version=1.2.0 --out='./build' --overwrite=true"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,8 @@
     "nedb": "^1.8.0"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^1.1.6"
+    "cz-conventional-changelog": "^1.1.6",
+    "electron-packager": "^7.0.3"
   },
   "config": {
     "commitizen": {
