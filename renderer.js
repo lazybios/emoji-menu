@@ -3,7 +3,7 @@
 var $ = require('jquery');
 var Emojis = require('./emoji.js');
 
-var fs = require('fs');
+// var fs = require('fs');
 
 // Nedb
 var Datastore = require('nedb');
@@ -22,7 +22,9 @@ var peopleHtml = '',
 function renderGroup(group){
   var groupHtml = '';
   group.forEach(function(element){
-    groupHtml += '<img class="emoji-cell" data-clipboard-action="copy" src="graphics/emojis/' + element.name + '.png" alt=":' + element.text + ':" data-alternative-name="' + element.alternative_name + '">'
+    groupHtml += '<img class="emoji-cell" data-clipboard-action="copy" ' +
+    'src="graphics/emojis/' + element.name + '.png" alt=":' + element.text +
+    ':" data-alternative-name="' + element.alternative_name + '">';
   });
   return groupHtml;
 }
@@ -36,9 +38,7 @@ symbolsHtml = renderGroup(Emojis.symbols);
 function initCommonTab(){
   db.find({}).sort({count: -1}).limit(30).exec(function(err, docs){
     var commonHtml = '';
-    $.each(docs, function(_, value){
-       commonHtml += '<img class="emoji-cell" data-clipboard-action="copy" src="graphics/emojis/' + value.name + '.png" alt=":' + value.text + ':" data-alternative-name="' + value.alternative_name + '">'
-    });
+    commonHtml = renderGroup(docs);
     $('#common').html(commonHtml);
   });
 }
@@ -72,6 +72,12 @@ var clipboard = new Clipboard('.emoji-cell', {
   }
 });
 
+function statusTips(text){
+  var CopyStatus = $('#emoji-copy-status');
+  CopyStatus.html(text);
+  CopyStatus.stop().fadeIn(400).delay(2000).fadeOut(400);
+}
+
 clipboard.on('success', function(e){
 
   // Toast copy success
@@ -80,16 +86,18 @@ clipboard.on('success', function(e){
 
   var text = $(e.trigger).attr('alt').match(TEXT_RE)[1];
 
-  // recently used stattistic
+  // Recently used stattistic
   db.find({ text:  text}, function(err, docs){
     if(docs.length === 0){
-      // save
-      db.insert(emojiMetas(e.trigger), function(err, docs){
+
+      // Save
+      db.insert(emojiMetas(e.trigger), function(err){
         console.log(err);
       });
     }else{
-      // count + 1
-      db.update({ text: text }, {$inc: {count: 1}}, function(err, docs){
+      
+      // Count + 1
+      db.update({ text: text }, {$inc: {count: 1}}, function(err){
         if(err !== null){
           console.log('error');
         }
@@ -104,15 +112,10 @@ clipboard.on('error', function(e){
   statusTips('Copy Failed ' + e.text);
 });
 
-function statusTips(text){
-  var CopyStatus = $('#emoji-copy-status');
-  CopyStatus.html(text);
-  CopyStatus.stop().fadeIn(400).delay(2000).fadeOut(400);
-}
-
 // Tab
 var emojiTabs = $('#emoji-tab>li');
 var emojiLists = $('#emoji-view>div');
+
 $('#emoji-tab li').on('click', function(){
   emojiTabs.removeClass('tab-selected');
   emojiLists.hide();
@@ -122,7 +125,7 @@ $('#emoji-tab li').on('click', function(){
       $('#' + $(this).data('title').toLowerCase()).show();
     }
   }
-})
+});
 
 // Search
 function isElementMatching(element, needle){
