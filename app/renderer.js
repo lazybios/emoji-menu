@@ -54,7 +54,10 @@ $('#symbols').html(symbolsHtml);
 initCommonTab();
 
 $('#common-tab').on('click', function(){
-  initCommonTab();
+  var inputText = $('#emoji-search>input').val();
+  if(!inputText){
+    initCommonTab();
+  }
 });
 
 function emojiMetas(el){
