@@ -1,15 +1,17 @@
 
 // JQuery
 var $ = require('jquery');
+var path = require('path');
 var Emojis = require('./emoji.js');
 var clipboard = require('electron').clipboard;
 
 // Nedb
 var Datastore = require('nedb');
 var db = new Datastore({
-                        filename: __dirname + 'resources/recently.db',
+                        filename: path.resolve(__dirname, '../' +
+                                  'resources/recently.db'),
                         autoload: true
-                       });
+                      });
 
 var TEXT_RE = /:(.*):/;
 var NAME_RE = /.*\/(.*)\.png$/;
