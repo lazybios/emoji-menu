@@ -2,6 +2,7 @@
 // JQuery
 var $ = require('jquery');
 var Emojis = require('./emoji.js');
+var clipboard = require('electron').clipboard;
 
 // Nedb
 var Datastore = require('nedb');
@@ -66,49 +67,33 @@ function emojiMetas(el){
 }
 
 // Copy
-var Clipboard = require('../node_modules/clipboard/dist/clipboard.js');
-
-var clipboard = new Clipboard('.emoji-cell', {
-  text: function(trigger){
-    return trigger.getAttribute('alt');
-  }
-});
-
 function statusTips(text){
   var CopyStatus = $('#emoji-copy-status');
   CopyStatus.html(text);
   CopyStatus.stop().fadeIn(400).delay(2000).fadeOut(400);
 }
 
-clipboard.on('success', function(e){
-
-  // Toast copy success
-  statusTips('Copied ' + e.text);
-  e.clearSelection();
-
-  var text = $(e.trigger).attr('alt').match(TEXT_RE)[1];
-
-  db.find({ text:  text}, function(err, docs){
-    if(docs.length === 0){
-
-      db.insert(emojiMetas(e.trigger), function(err){
-        if (err !== null) {
-          console.log(err);
-        }
-      });
-    }else{
-
-      db.update({ text: text }, {$inc: {count: 1}}, function(err){
-        if(err !== null){
-          console.log('error');
-        }
-      });
-    }
-  });
-});
-
-clipboard.on('error', function(e){
-  statusTips('Copy Failed ' + e.text);
+$(document).on('click', '.emoji-cell', function(){
+   var that = this;
+   var emojiText = $(that).attr('alt');
+   var text = emojiText.match(TEXT_RE)[1];
+   clipboard.writeText(emojiText);
+   statusTips('Copied ' + emojiText);
+   db.find({ text:  text}, function(err, docs){
+     if(docs.length === 0){
+       db.insert(emojiMetas(that), function(err){
+         if (err !== null) {
+           console.log(err);
+         }
+       });
+     }else{
+       db.update({ text: text }, {$inc: {count: 1}}, function(err){
+         if(err !== null){
+           console.log('error');
+         }
+       });
+     }
+   });
 });
 
 // Tab
