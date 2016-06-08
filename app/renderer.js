@@ -3,14 +3,15 @@
 var $ = require('jquery');
 var Emojis = require('./emoji.js');
 
-// var fs = require('fs');
-
 // Nedb
 var Datastore = require('nedb');
-var db = new Datastore({filename: './recently.db', autoload: true});
+var db = new Datastore({
+                        filename: __dirname + 'resources/recently.db',
+                        autoload: true
+                       });
 
-const TEXT_RE = /:(.*):/;
-const NAME_RE = /.*\/(.*)\.png$/;
+var TEXT_RE = /:(.*):/;
+var NAME_RE = /.*\/(.*)\.png$/;
 
 // Render Emoji
 var peopleHtml = '',
@@ -23,8 +24,9 @@ function renderGroup(group){
   var groupHtml = '';
   group.forEach(function(element){
     groupHtml += '<img class="emoji-cell" data-clipboard-action="copy" ' +
-    'src="graphics/emojis/' + element.name + '.png" alt=":' + element.text +
-    ':" data-alternative-name="' + element.alternative_name + '">';
+                 'src="../resources/images/graphics/emojis/' + element.name +
+                 '.png" alt=":' + element.text +
+                 ':" data-alternative-name="' + element.alternative_name + '">';  // jshint ignore:line
   });
   return groupHtml;
 }
@@ -59,12 +61,12 @@ function emojiMetas(el){
   var alternative = $(el).data('alternative-name');
   var text = $(el).attr('alt').match(TEXT_RE)[1];
 
-  var obj = { name: name, alternative_name: alternative, text: text, count: 0 };
+  var obj = { name: name, alternative_name: alternative, text: text, count: 0 };  // jshint ignore:line
   return obj;
 }
 
 // Copy
-var Clipboard = require(`${__dirname}/node_modules/clipboard/dist/clipboard.js`);
+var Clipboard = require('../node_modules/clipboard/dist/clipboard.js');
 
 var clipboard = new Clipboard('.emoji-cell', {
   text: function(trigger){
@@ -86,17 +88,16 @@ clipboard.on('success', function(e){
 
   var text = $(e.trigger).attr('alt').match(TEXT_RE)[1];
 
-  // Recently used stattistic
   db.find({ text:  text}, function(err, docs){
     if(docs.length === 0){
 
-      // Save
       db.insert(emojiMetas(e.trigger), function(err){
-        console.log(err);
+        if (err !== null) {
+          console.log(err);
+        }
       });
     }else{
-      
-      // Count + 1
+
       db.update({ text: text }, {$inc: {count: 1}}, function(err){
         if(err !== null){
           console.log('error');
@@ -107,8 +108,6 @@ clipboard.on('success', function(e){
 });
 
 clipboard.on('error', function(e){
-
-  // Toast copy failed
   statusTips('Copy Failed ' + e.text);
 });
 
