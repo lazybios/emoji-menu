@@ -5,7 +5,10 @@ var Emojis = require('./emoji.js');
 
 // Nedb
 var Datastore = require('nedb');
-var db = new Datastore({filename: __dirname + 'resources/recently.db', autoload: true});
+var db = new Datastore({
+                        filename: __dirname + 'resources/recently.db',
+                        autoload: true
+                       });
 
 var TEXT_RE = /:(.*):/;
 var NAME_RE = /.*\/(.*)\.png$/;
@@ -21,8 +24,9 @@ function renderGroup(group){
   var groupHtml = '';
   group.forEach(function(element){
     groupHtml += '<img class="emoji-cell" data-clipboard-action="copy" ' +
-    'src="../resources/images/graphics/emojis/' + element.name + '.png" alt=":' + element.text +
-    ':" data-alternative-name="' + element.alternative_name + '">';  // jshint ignore:line
+                 'src="../resources/images/graphics/emojis/' + element.name +
+                 '.png" alt=":' + element.text +
+                 ':" data-alternative-name="' + element.alternative_name + '">';  // jshint ignore:line
   });
   return groupHtml;
 }
