@@ -1,8 +1,8 @@
 # emoji-menu
-![NPM](https://img.shields.io/badge/npm-3.9.2-blue.svg)](https://img.shields.io/badge/npm-3.9.2-blue.svg)
+![NPM](https://img.shields.io/badge/npm-3.9.2-blue.svg)
 ![Electron](https://img.shields.io/badge/electron-1.2.0-brightgreen.svg)
 
-emoji-menu是一款任务栏emoji表情检索工具。效果如下图:
+emoji-menu is an app for emoji retreive tool in the taskbar. Previews are as follows:
 
 ##### Mac OS X
 ![](mac_screenshot.png)
@@ -11,20 +11,20 @@ emoji-menu是一款任务栏emoji表情检索工具。效果如下图:
 ![](win_screenshot.png)
 
 ### Install
-+ 从release页面下载，直接拖到app 目录 (打包分两个版本，dmg, exe)
++ download from release page, and move it to the app directory (there are two versions of the package: dmg and exe)
 
 ### Usage
-![Gif 动态使用效果图]()
-+ 点击 任务栏图标
-+ 分别点击 几个tab 显示表情
-+ 在人物tab中滑动鼠标，显示更多表情
-+ 搜索栏输入文字，he
-+ 分别点击其它tab 2个
-+ 第三个tab上停留，删除e字母, 再删h
-+ 点击其中任意图标，显示出复制弹窗
-+ 点击桌面任意位置，emoji弹窗消失
-+ 复制到github issue页面，右键复制
-+ 点击github preview按钮看到效果
+![Gif Previes]()
++ click the app icon in the taskbar
++ click each tab to show emoijs respectively
++ sliding the cursor over the people tab will show more emojis
++ input text in the search bar, `he`
++ click other two tabs respectively
++ stop at the third tab, and delete character `e`, then delete `h`
++ click any icons will pop up the window for copy
++ click any place of the desktop, the window of emoji will be disappeared
++ click the right cursor to cope the emoji to github issue page
++ click github preview button and see the result
 
 ### Build
 ```
