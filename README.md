@@ -14,17 +14,7 @@ emoji-menu is an app for emoji retreive tool in the taskbar. Previews are as fol
 + download from release page, and move it to the app directory (there are two versions of the package: dmg and exe)
 
 ### Usage
-![Gif Previes]()
-+ click the app icon in the taskbar
-+ click each tab to show emoijs respectively
-+ sliding the cursor over the people tab will show more emojis
-+ input text in the search bar, `he`
-+ click other two tabs respectively
-+ stop at the third tab, and delete character `e`, then delete `h`
-+ click any icons will pop up the window for copy
-+ click any place of the desktop, the window of emoji will be disappeared
-+ click the right cursor to cope the emoji to github issue page
-+ click github preview button and see the result
+![gif demo](demo.gif)
 
 ### Build
 ```
