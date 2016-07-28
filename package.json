@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "electron-packager . emoji-menu --platform=darwin --arch=x64 --version=1.2.0 --out='./build' --overwrite=true"
+    "build": "electron-packager . emoji-menu --platform=darwin --arch=x64 --version=1.2.0 --out='./build' --overwrite=true --icon=./resources/images/icons/emoji-menu.icns"
   },
   "repository": {
     "type": "git",
