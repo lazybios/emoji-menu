@@ -58,13 +58,11 @@ var template = [
 
 // todo: need remove
 mb.on('ready', function ready(){
-  console.log(__dirname + '/resources/images/icon.png');
   var menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 });
 
 mb.on('after-create-window', function (){
-  mb.window.openDevTools();
-  mb.window.loadURL('file://' + __dirname + '/app/index.html');
+  mb.window.loadURL('file://' + __dirname + '/index.html');
 });
 
