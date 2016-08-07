@@ -8,8 +8,7 @@ var clipboard = require('electron').clipboard;
 // Nedb
 var Datastore = require('nedb');
 var db = new Datastore({
-                        filename: path.resolve(__dirname, '../' +
-                                  'resources/recently.db'),
+                        filename: __dirname + 'resources/recently.db',
                         autoload: true
                       });
 
@@ -27,7 +26,7 @@ function renderGroup(group){
   var groupHtml = '';
   group.forEach(function(element){
     groupHtml += '<img class="emoji-cell" data-clipboard-action="copy" ' +
-                 'src="../resources/images/graphics/emojis/' + element.name +
+                 'src="./resources/images/graphics/emojis/' + element.name +
                  '.png" alt=":' + element.text +
                  ':" data-alternative-name="' + element.alternative_name + '">';  // jshint ignore:line
   });

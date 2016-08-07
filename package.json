@@ -2,11 +2,12 @@
   "name": "emoji-menu",
   "version": "0.1.0",
   "description": "a emoji cheat sheet on your menubar",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
-    "start": "electron index.js",
+    "start": "electron app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "electron-packager . emoji-menu --platform=darwin --arch=x64 --version=1.2.0 --out='./build' --overwrite=true"
+    "build": "electron-packager . emoji-menu --platform=darwin --arch=x64 --version=1.2.0 --out='./build' --overwrite=true --icon=./app/resources/images/icons/emoji-menu.icns",
+    "dist:mac": "build --platform=osx "
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,7 @@
     "menubar",
     "electron"
   ],
-  "author": "lazybios, runfastlynda",
+  "author": "lazybios, runfastlynda, cvley",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/lazybios/emoji-menu/issues"
@@ -31,7 +32,14 @@
   },
   "devDependencies": {
     "cz-conventional-changelog": "^1.1.6",
+    "electron-builder": "^5.17.0",
     "electron-packager": "^7.0.3"
+  },
+  "build": {
+    "mac": {
+      "title": "emoji-menu",
+      "icon": "./app/resources/images/icons/emoji-menu.icns"
+    }
   },
   "config": {
     "commitizen": {

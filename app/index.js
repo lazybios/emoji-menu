@@ -63,5 +63,6 @@ mb.on('ready', function ready(){
 });
 
 mb.on('after-create-window', function (){
-  mb.window.loadURL('file://' + __dirname + '/app/index.html');
+  mb.window.loadURL('file://' + __dirname + '/index.html');
 });
+
