@@ -4,17 +4,10 @@
 
 emoji-menu is an app for emoji retreive tool in the taskbar. Previews are as follows:
 
-##### Mac OS X
-![](mac_screenshot.png)
-
-##### Windows
-![](win_screenshot.png)
+![gif demo](demo.gif)
 
 ### Install
-+ download from release page, and move it to the app directory (there are two versions of the package: dmg and exe)
-
-### Usage
-![gif demo](demo.gif)
++ download from [releases page](https://github.com/lazybios/emoji-menu/releases)
 
 ### Build
 ```
@@ -30,7 +23,6 @@ npm run build
 + Shortcut support
 + Copied emoji charset first
 + Autolaunched after startup
-+ Exceptions window
 + Reset recently used
 
 ### Contributing
@@ -43,6 +35,7 @@ npm run build
 ### Contributors
 + [runfastlynda](https://github.com/runfastlynda)
 + [lazybios](https://github.com/lazybios)
++ [cvley](https://github.com/cvley)
 
 ### Thanks to :heart:
 + [menubar](https://github.com/maxogden/menubar)
