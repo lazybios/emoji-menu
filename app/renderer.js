@@ -1,9 +1,14 @@
 
-// JQuery
 var $ = require('jquery');
 var path = require('path');
 var Emojis = require('./emoji.js');
 var clipboard = require('electron').clipboard;
+
+var $emojiTabs = $('#emoji-tab>li');
+var $emojiLists = $('#emoji-view>div');
+var $emojiSearchDelete = $('#emoji-search-delete');
+var $emojiSearchInput = $('#emoji-search>input');
+
 
 // Nedb
 var Datastore = require('nedb');
@@ -16,6 +21,7 @@ var db = new Datastore({
 var TEXT_RE = /:(.*):/;
 var NAME_RE = /.*\/(.*)\.png$/;
 
+
 // Render Emoji
 var peopleHtml = '',
     natureHtml = '',
@@ -23,9 +29,9 @@ var peopleHtml = '',
     placesHtml = '',
     symbolsHtml = '';
 
-function renderGroup(group){
+function renderGroup(group) {
   var groupHtml = '';
-  group.forEach(function(element){
+  group.forEach(function (element) {
     groupHtml += '<img class="emoji-cell" data-clipboard-action="copy" ' +
                  'src="../resources/images/graphics/emojis/' + element.name +
                  '.png" alt=":' + element.text +
@@ -40,7 +46,7 @@ objectsHtml = renderGroup(Emojis.objects);
 placesHtml = renderGroup(Emojis.places);
 symbolsHtml = renderGroup(Emojis.symbols);
 
-function initCommonTab(){
+function initCommonTab() {
   db.find({}).sort({count: -1}).limit(30).exec(function(err, docs){
     var commonHtml = '';
     commonHtml = renderGroup(docs);
@@ -55,45 +61,51 @@ $('#places').html(placesHtml);
 $('#symbols').html(symbolsHtml);
 initCommonTab();
 
-$('#common-tab').on('click', function(){
-  var inputText = $('#emoji-search>input').val();
-  if(!inputText){
+$('#common-tab').on('click', function () {
+  var inputText = $emojiSearchInput.val();
+  if (!inputText) {
     initCommonTab();
   }
 });
 
-function emojiMetas(el){
-  var name = $(el).attr('src').match(NAME_RE)[1];
-  var alternative = $(el).data('alternative-name');
-  var text = $(el).attr('alt').match(TEXT_RE)[1];
-
-  var obj = { name: name, alternative_name: alternative, text: text, count: 0 };  // jshint ignore:line
-  return obj;
-}
 
 // Copy
-function statusTips(text){
+function statusTips(text) {
   var CopyStatus = $('#emoji-copy-status');
   CopyStatus.html(text);
   CopyStatus.stop().fadeIn(400).delay(2000).fadeOut(400);
 }
 
-$(document).on('click', '.emoji-cell', function(){
+function emojiMetas(el) {
+  var name = $(el).attr('src').match(NAME_RE)[1];
+  var alternative = $(el).data('alternative-name');
+  var text = $(el).attr('alt').match(TEXT_RE)[1];
+
+  var obj = { 
+    name: name,
+    alternative_name: alternative, 
+    text: text,
+    count: 0 
+  };
+  return obj;
+}
+
+$(document).on('click', '.emoji-cell', function () {
    var that = this;
    var emojiText = $(that).attr('alt');
    var text = emojiText.match(TEXT_RE)[1];
    clipboard.writeText(emojiText);
    statusTips('Copied ' + emojiText);
-   db.find({ text:  text}, function(err, docs){
-     if(docs.length === 0){
-       db.insert(emojiMetas(that), function(err){
+   db.find({ text:  text}, function (err, docs) {
+     if (docs.length === 0) {
+       db.insert(emojiMetas(that), function (err) {
          if (err !== null) {
            console.log(err);
          }
        });
-     }else{
-       db.update({ text: text }, {$inc: {count: 1}}, function(err){
-         if(err !== null){
+     } else {
+       db.update({ text: text }, {$inc: {count: 1}}, function (err) {
+         if (err !== null) {
            console.log('error');
          }
        });
@@ -101,67 +113,66 @@ $(document).on('click', '.emoji-cell', function(){
    });
 });
 
-// Tab
-var emojiTabs = $('#emoji-tab>li');
-var emojiLists = $('#emoji-view>div');
 
-$('#emoji-tab li').on('click', function(){
-  emojiTabs.removeClass('tab-selected');
-  emojiLists.hide();
+// Tab
+$('#emoji-tab li').on('click', function () {
+  $emojiTabs.removeClass('tab-selected');
+  $emojiLists.hide();
   $(this).addClass('tab-selected');
-  for(var i = 0; i < emojiLists.length; i++){
-    if($(this).data('title').toLowerCase() === emojiLists[i].id){
+  for (var i = 0; i < $emojiLists.length; i++) {
+    if ($(this).data('title').toLowerCase() === $emojiLists[i].id) {
       $('#' + $(this).data('title').toLowerCase()).show();
     }
   }
 });
 
+
 // Search
-function isElementMatching(element, needle){
+function isElementMatching(element, needle) {
   var alternative = element.attr('data-alternative-name');
   var name = element.attr('alt');
   return (name.toLowerCase().indexOf(needle) >= 0) ||
     (alternative !== null && alternative.toLowerCase().indexOf(needle) >= 0);
 }
 
-function highlightAll(){
+function highlightAll() {
   $('.emoji-cell').show();
 }
 
-function highlightElements(needle){
-  if(needle.length === 0){
+function highlightElements(needle) {
+  if (needle.length === 0) {
     highlightAll();
-    $('#emoji-search-delete').hide();
+    $emojiSearchDelete.hide();
     return;
   }
 
   needle = needle.toLowerCase();
-  $('#emoji-view img').each(function(index, el){
-    if(isElementMatching($(el), needle)){
+  $('#emoji-view img').each(function (index, el) {
+    if (isElementMatching($(el), needle)) {
       $(el).show();
-    }else{
+    } else {
       $(el).hide();
     }
   });
 }
 
-$('#emoji-search>input').keyup(function(e){
-  if(e.keyCode === 27){
+$emojiSearchInput.keyup(function (e) {
+  if (e.keyCode === 27) {
     $(this).val('').blur();
     highlightAll();
-    $('#emoji-search-delete').hide();
+    $emojiSearchDelete.hide();
   }
 });
 
-$('#emoji-search>input').on('change paste keyup', function(){
-  $('#emoji-search-delete').show();
-  highlightElements($('#emoji-search>input').val());
+$emojiSearchInput.on('change paste keyup', function () {
+  $emojiSearchDelete.show();
+  highlightElements($emojiSearchInput.val());
 });
 
-$('#emoji-search>input').focus();
+$emojiSearchInput.focus();
 
-$('#emoji-search-delete').on('click', function(){
-  $('#emoji-search>input').val('');
-  $('#emoji-search-delete').hide();
+$emojiSearchDelete.on('click', function () {
+  $emojiSearchInput.val('');
+  $emojiSearchDelete.hide();
   highlightAll();
 });
